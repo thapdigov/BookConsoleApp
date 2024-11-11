@@ -1,4 +1,4 @@
-package az.turing.app;
+package az.turing.bookapp;
 
 public class App {
     public static void main(String[] args) {
