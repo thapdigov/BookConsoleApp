@@ -8,6 +8,7 @@ public class BookingEntity {
     private final FlightEntity flightEntity;
     private final List<PassengerEntity> passengerList;
 
+
     public BookingEntity(String bookId, FlightEntity flightEntity, List<PassengerEntity> passengerList) {
         this.bookId = bookId;
         this.flightEntity = flightEntity;
