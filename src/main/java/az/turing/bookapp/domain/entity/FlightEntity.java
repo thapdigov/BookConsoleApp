@@ -1,6 +1,7 @@
 package az.turing.bookapp.domain.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class FlightEntity {
@@ -20,12 +21,12 @@ public class FlightEntity {
         this.flightId = flightId;
     }
 
-    public FlightEntity(String flightId, String departurPoint, String arrivalPoint, LocalDateTime departurTime, LocalDateTime arrivalTime, Integer totalSeats, Integer availableSets) {
+    public FlightEntity(String flightId, String departurPoint, String arrivalPoint, String departurTime, String arrivalTime, Integer totalSeats, Integer availableSets) {
         this.flightId = flightId;
         this.departurPoint = departurPoint;
         this.arrivalPoint = arrivalPoint;
-        this.departurTime = departurTime;
-        this.arrivalTime = arrivalTime;
+        this.departurTime = LocalDateTime.parse(departurTime, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.arrivalTime = LocalDateTime.parse(arrivalTime, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.totalSeats = totalSeats;
         this.availableSets = availableSets;
     }

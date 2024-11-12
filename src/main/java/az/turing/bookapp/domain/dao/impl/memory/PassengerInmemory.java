@@ -14,12 +14,17 @@ public class PassengerInmemory extends PassengerDao {
 
     @Override
     public PassengerEntity insert(PassengerEntity passengerEntity) {
+        if (passengerEntityList.containsKey(passengerEntity.getPassengerId())) {
+            System.out.println("Passenger with Id " + passengerEntity.getPassengerId() + " already exists!");
+            return null;
+        }
         passengerEntityList.put(passengerEntity.getPassengerId(), passengerEntity);
         return passengerEntity;
     }
 
     @Override
     public PassengerEntity update(PassengerEntity passengerEntity) {
+
         int choose = inputUtil.getInteger("""
                 Choose the entityField you want to change!
                 1.Passenger ID
@@ -38,7 +43,14 @@ public class PassengerInmemory extends PassengerDao {
 
     @Override
     public PassengerEntity delete(String passengerId) {
-        return passengerEntityList.remove(passengerId);
+        if (!(passengerEntityList.containsKey(passengerId))) {
+            System.out.println("Passenger with Id " + passengerId + " is not found!");
+            return null;
+        } else {
+            System.out.println("Passenger with Id " + passengerId + " has been deleted!");
+            return passengerEntityList.remove(passengerId);
+
+        }
     }
 
     @Override
@@ -48,7 +60,11 @@ public class PassengerInmemory extends PassengerDao {
 
     @Override
     public Optional<PassengerEntity> getById(String passengerId) {
-        return passengerEntityList.containsKey(passengerId)
-                ? Optional.of(passengerEntityList.get(passengerId)) : Optional.empty();
+        return Optional.ofNullable(passengerEntityList.get(passengerId));
+    }
+
+    @Override
+    public boolean existsById(String ID) {
+        return !passengerEntityList.containsKey(ID);
     }
 }

@@ -4,12 +4,23 @@ import az.turing.bookapp.domain.dao.inter.BookingDao;
 import az.turing.bookapp.domain.entity.BookingEntity;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class BookingInmemory extends BookingDao {
+
+    Map<String, BookingEntity> bookList = new HashMap<>();
+
+
     @Override
     public BookingEntity insert(BookingEntity bookingEntity) {
-        return null;
+        if ((bookList.containsKey(bookingEntity.getBookId()) && bookingEntity.getFlightEntity() != null)) {
+            System.out.println("This passenger already exists in this flight!");
+        } else {
+            bookList.put(bookingEntity.getBookId(), bookingEntity);
+        }
+        return bookingEntity;
     }
 
     @Override
@@ -18,17 +29,17 @@ public class BookingInmemory extends BookingDao {
     }
 
     @Override
-    public BookingEntity delete(String s) {
-        return null;
+    public BookingEntity delete(String bookingID) {
+        return bookList.remove(bookingID);
     }
 
     @Override
     public Collection<BookingEntity> getAll() {
-        return null;
+        return bookList.values();
     }
 
     @Override
-    public Optional<BookingEntity> getById(String s) {
-        return Optional.empty();
+    public Optional<BookingEntity> getById(String bookId) {
+        return Optional.ofNullable(bookList.get(bookId));
     }
 }
